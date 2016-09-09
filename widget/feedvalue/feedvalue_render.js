@@ -113,6 +113,7 @@ function feedvalue_widgetlist()
 	addOption(widgets["feedvalue"], "colour1",   "colour_picker",  _Tr("Colour1"),     _Tr("Colour for range below Threshold1"),      []);
 	addOption(widgets["feedvalue"], "colour2",   "colour_picker",  _Tr("Colour2"),     _Tr("Colour for range between Threshold1 and Threshold2"),      []);
 	addOption(widgets["feedvalue"], "colour3",   "colour_picker",  _Tr("Colour3"),     _Tr("Colour for range above Threshold2"),      []);
+	addOption(widgets["feedvalue"], "mode",     "value",   _Tr("Mode"),          _Tr("Mode"),   []);
 	return widgets;
 }
 
@@ -243,6 +244,25 @@ function feedvalue_draw()
             }
         }
 
+        var mode = feedvalue.attr("mode");
+        if (mode==undefined) mode = '';
+        if (mode == "daily") {
+            var diffval = associd[feedid]['dvalue']['value'];
+            if (diffval) {
+                val = val - diffval;
+            }
+        } else if (mode == "monthly") {
+            var diffval = associd[feedid]['mvalue']['value'];
+            if (diffval) {
+                val = val - diffval;
+            }
+        } else if (mode == "yearly") {
+            var diffval = associd[feedid]['yvalue']['value'];
+            if (diffval) {
+                val = val - diffval;
+            }
+        }
+        
         var size = feedvalue.attr("size");
 
         var decimals = feedvalue.attr("decimals");
